@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <title>Roadkill Data Collection</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .addRecordBtn {
+            position: absolute;
+            z-index: 10;
+            top: 10px;
+            right: 10px;
+            background-color: #0079c1;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .addRecordBtn:hover {
+        background-color: #005a87;
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <script>
+        require([ "esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer" ], (esriConfig, Map, MapView, Locate, Search, FeatureLayer) => {
+            //API key
+            esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurO1yiQQh2vI3Qn8Db6q-7q35-Hk6vmdl5LFx-iA8OfHStEGSc0O2Hh2AVXBbnzAzUfmXpsiU9jtegxcv5IfKdtkMl3tRS5-J1YeVKCVcMX0AQzimcC5iS4Ps8ULD6N08JBSq7E6J8of7KNgsgXs7Kncp_Pa0kJ0FmzHj-4nCZU-AUBLYjHvSVcfLuOAd-J5Q9v95E8_VLaxLLM_uRGBYHsYc8FSIYoBRmb9v0uAlEkLZAT1_V8N2Zwcl";
+            //Constructs basemap using the satellite design
+            const map = new Map({
+                basemap: "topo-vector"
+            });
+            //Creates the map with the center on Lake Baikal
+            const view = new MapView({
+                container: "viewDiv", 
+                    map: map,
+                    center: [44.964312, -89.689617],
+                    zoom: 5 
+            });
+            //Create Locate button
+            const locateBtn = new Locate({
+          view: view
+        });
+        //Position Locate button
+        view.ui.add(locateBtn, {
+          position: "top-left"
+        });
+        //Create Search button
+        const searchBtn = new Search({
+          view: view
+        });
+        //Position Search button
+        view.ui.add(searchBtn, {
+          position: "bottom-right"
+        });
+        //Create Feature Layer with the survey
+        const layer = new FeatureLayer({  
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_79b8eaf772df4ae3a21f37810ba3e08c/FeatureServer"
+        });
+        //Add Feature Layer (survey)
+        map.add(layer);
+
+    });
+        </script>
+
+  </head>
+  <body>
+    <a href="https://survey123.arcgis.com/share/55a1dcb95cfe435a8b16cebfd83afef4"target="_blank" class="addRecordBtn">Add Record</a>
+    <div id="viewDiv"></div>
+  </body>
+</html>
