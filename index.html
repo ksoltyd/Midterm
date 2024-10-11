@@ -87,6 +87,14 @@
             
             map.add(layer);
 
+            const roadwayLayerUrl = "https://dnrmaps.wi.gov/arcgis/rest/services/DW_Map_Cached/EN_Basic_Basemap_WTM_Ext/MapServer/5"; 
+
+            const roadwayLayer = new FeatureLayer({  
+                url: roadwayLayerUrl
+            });
+    
+            map.add(roadwayLayer);
+
            
             const legend = new Legend({
                 view: view,
