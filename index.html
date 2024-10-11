@@ -81,11 +81,43 @@
             view.ui.add(searchBtn, { position: "bottom-right" });
 
             
-            const layer = new FeatureLayer({  
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_79b8eaf772df4ae3a21f37810ba3e08c/FeatureServer"
-            });
-            
-            map.add(layer);
+    const surveyLayerUrl = "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_79b8eaf772df4ae3a21f37810ba3e08c/FeatureServer"; // Example URL
+
+    const surveyLayer = new FeatureLayer({  
+        url: surveyLayerUrl,
+        renderer: {
+            type: "unique-value",
+            field: "What type of animal is it?", 
+            uniqueValueInfos: [
+                {
+                    value: "Deer", 
+                    symbol: {
+                        type: "simple-marker",
+                        color: "green",
+                        size: "10px",
+                        outline: {
+                            color: "black",
+                            width: 1
+                        }
+                    },
+                    label: "Deer"
+                },
+                {
+                    value: "Bear", 
+                    symbol: {
+                        type: "simple-marker",
+                        color: "blue",
+                        size: "10px",
+                        outline: {
+                            color: "black",
+                            width: 1
+                        }
+                    },
+                    label: "Bear"
+                }
+            ]
+        }
+    });
 
             const countyLayerUrl = "https://services5.arcgis.com/Ul9AyFFeFTjf08DW/arcgis/rest/services/Wisconsin_County_Boundaries_24K/FeatureServer"; 
 
