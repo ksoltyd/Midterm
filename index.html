@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ri<!DOCTYPE html>
  <html>
   <head>
 
@@ -42,7 +42,7 @@
     <script src="https://js.arcgis.com/4.26/"></script>
 
     <script>
-        require([ "esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer" ], (esriConfig, Map, MapView, Locate, Search, FeatureLayer) => {
+        require([ "esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/widgets/Legend", "esri/layers/FeatureLayer" ], (esriConfig, Map, MapView, Locate, Search, Legend, FeatureLayer) => {
             //API key
             esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurO1yiQQh2vI3Qn8Db6q-7q35-Hk6vmdl5LFx-iA8OfHStEGSc0O2Hh2AVXBbnzAzUfmXpsiU9jtegxcv5IfKdtkMl3tRS5-J1YeVKCVcMX0AQzimcC5iS4Ps8ULD6N08JBSq7E6J8of7KNgsgXs7Kncp_Pa0kJ0FmzHj-4nCZU-AUBLYjHvSVcfLuOAd-J5Q9v95E8_VLaxLLM_uRGBYHsYc8FSIYoBRmb9v0uAlEkLZAT1_V8N2Zwcl";
             
@@ -78,6 +78,18 @@
         });
         //Add Feature Layer (survey)
         map.add(layer);
+
+         const legend = new Legend({
+            view: view,
+            layerInfos: [{
+              layer: layer,
+              title: "Roadkill Survey Data" 
+           }]
+        });
+
+    
+    view.ui.add(legend, "bottom-left"); 
+});
 
     });
         </script>
