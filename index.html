@@ -52,6 +52,18 @@
             border-radius: 4px;
             text-align: center;
         }
+
+        .legend-icon {
+            cursor: pointer;
+            background-color: #0079c1;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 10;
+        }
         
         .esri-legend {
             width: 50px;
@@ -211,20 +223,24 @@
             legendHeader.classList.add("legend-header");
             legendHeader.innerText = "Legend";
             legendContainer.appendChild(legendHeader);
-            view.ui.add(legendContainer, "bottom-left");
-
-            // Append legend to the container
             legendContainer.appendChild(legend.container);
+            view.ui.add(legendContainer, "bottom-left");    
+
+            const legendIcon = document.createElement("div");
+            legendIcon.classList.add("legend-icon");
+            legendIcon.innerHTML = "&#9660;"; // Downward triangle symbol for collapsed state
+            view.ui.add(legendIcon, "bottom-left");
 
             // Toggle display
             legendHeader.addEventListener("click", () => {
                 const isVisible = legendContainer.style.display === "block";
                 legendContainer.style.display = isVisible ? "none" : "block";
+                legendIcon.style.display = isVisible ? "block" : "none"; 
             });
 
             // Initialize as hidden
             legendContainer.style.display = "block";
-            
+            legendIcon.style.display = "block"; // Initially show the icon
         });
     </script>
 </head>
