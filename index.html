@@ -232,11 +232,15 @@
             view.ui.add(legendIcon, "bottom-left");
 
             // Toggle display
-            legendHeader.addEventListener("click", () => {
+            const toggleLegend = () => {
                 const isVisible = legendContainer.style.display === "block";
                 legendContainer.style.display = isVisible ? "none" : "block";
-                legendIcon.style.display = isVisible ? "block" : "none"; 
-            });
+                legendIcon.style.display = isVisible ? "block" : "none"; // Show icon when legend is hidden
+                legendIcon.innerHTML = isVisible ? "&#9660;" : "&#9650;"; // Change icon on toggle
+            };
+
+            legendHeader.addEventListener("click", toggleLegend);
+            legendIcon.addEventListener("click", toggleLegend);
 
             // Initialize as hidden
             legendContainer.style.display = "block";
