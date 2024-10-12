@@ -32,6 +32,27 @@
             background-color: #005a87;
         }
 
+        .legend-container {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 10;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+            display: none; /* Initially hidden */
+        }
+
+        .legend-header {
+            cursor: pointer;
+            background-color: #0079c1;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
         .esri-legend {
             width: 50px;
             font-size: 10px; 
@@ -183,6 +204,27 @@
             });
 
             view.ui.add(legend, "bottom-left"); 
+
+            const legendContainer = document.createElement("div");
+            legendContainer.classList.add("legend-container");
+            const legendHeader = document.createElement("div");
+            legendHeader.classList.add("legend-header");
+            legendHeader.innerText = "Legend";
+            legendContainer.appendChild(legendHeader);
+            view.ui.add(legendContainer, "bottom-left");
+
+            // Append legend to the container
+            legendContainer.appendChild(legend.container);
+
+            // Toggle display
+            legendHeader.addEventListener("click", () => {
+                const isVisible = legendContainer.style.display === "block";
+                legendContainer.style.display = isVisible ? "none" : "block";
+            });
+
+            // Initialize as hidden
+            legendContainer.style.display = "block";
+            
         });
     </script>
 </head>
