@@ -12,7 +12,7 @@
             height: 100%;
             width: 100%;
         }
-
+        //Add Record Button with the same options as in the last lab
         .addRecordBtn {
             position: absolute;
             z-index: 10;
@@ -31,7 +31,7 @@
         .addRecordBtn:hover {
             background-color: #005a87;
         }
-
+        // Container for my legend specifications
         .legend-container {
             position: absolute;
             bottom: 10px;
@@ -52,7 +52,7 @@
             border-radius: 4px;
             text-align: center;
         }
-
+        // Legend icon for when it is collapsed
         .legend-icon {
             cursor: pointer;
             background-color: #0079c1;
@@ -85,36 +85,36 @@
             "esri/layers/FeatureLayer" 
         ], (esriConfig, Map, MapView, Locate, Search, Legend, FeatureLayer) => {
             esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurO1yiQQh2vI3Qn8Db6q-7q35-Hk6vmdl5LFx-iA8OfHStEGSc0O2Hh2AVXBbnzAzUfmXpsiU9jtegxcv5IfKdtkMl3tRS5-J1YeVKCVcMX0AQzimcC5iS4Ps8ULD6N08JBSq7E6J8of7KNgsgXs7Kncp_Pa0kJ0FmzHj-4nCZU-AUBLYjHvSVcfLuOAd-J5Q9v95E8_VLaxLLM_uRGBYHsYc8FSIYoBRmb9v0uAlEkLZAT1_V8N2Zwcl"; 
-            
+            //Terrain basemap
             const map = new Map({
                 basemap: "arcgis-terrain"
             });
-
+            
             const view = new MapView({
                 container: "viewDiv", 
                 map: map,
-                center: [-89.570738, 44.447446],
-                zoom: 6,
+                center: [-89.570738, 44.447446], //Centered near Stevens Point 
+                zoom: 6, //Zoomed out to see the whole state of Wisconsin in mobile
                 constraints: {
                     minZoom: 1, 
-                    maxZoom: 10, 
+                    maxZoom: 10, //Doesn't let the user zoom too far out to lose the focus
                 }
             });
-
+            //Locate button
             const locateBtn = new Locate({ view: view });
             view.ui.add(locateBtn, { position: "top-left" });
-
+            //Search button
             const searchBtn = new Search({ view: view });
             view.ui.add(searchBtn, { position: "top-right" });
-
+            //Survey link
             const surveyLayerUrl = "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_79b8eaf772df4ae3a21f37810ba3e08c/FeatureServer";
 
             const surveyLayer = new FeatureLayer({  
                 url: surveyLayerUrl,
-                renderer: {
+                renderer: { //Establishes unique values for the legend items
                     type: "unique-value",
-                    field: "What type of animal is it?", 
-                    uniqueValueInfos: [
+                    field: "What type of animal is it?", //Survey field to base the legend on
+                    uniqueValueInfos: [ 
                         {
                             value: "Deer", 
                             symbol: {
@@ -198,7 +198,10 @@
             });
 
             map.add(surveyLayer);  
-
+            
+            // I only added the counties and not the roadways because I realized that the basemap already had roadways and adding the county and major 
+            //roadway layers really crowded the map
+            //I can submit a map with them added if needed, but it looked like a mess
             const countyLayerUrl = "https://services5.arcgis.com/Ul9AyFFeFTjf08DW/arcgis/rest/services/Wisconsin_County_Boundaries_24K/FeatureServer"; 
 
             const countyLayer = new FeatureLayer({  
@@ -206,7 +209,7 @@
             });
 
             map.add(countyLayer);
-
+            //Constructs the legend
             const legend = new Legend({
                 view: view,
                 layerInfos: [{
@@ -225,13 +228,14 @@
             legendContainer.appendChild(legendHeader);
             legendContainer.appendChild(legend.container);
             view.ui.add(legendContainer, "bottom-left");    
-
+          
+            //Legend icon for when it is collapsed
             const legendIcon = document.createElement("div");
             legendIcon.classList.add("legend-icon");
-            legendIcon.innerHTML = "&#9660;"; // Downward triangle symbol for collapsed state
+            legendIcon.innerHTML = "&#9660;"; 
             view.ui.add(legendIcon, "bottom-left");
 
-            // Toggle display
+            //Toggles display
             const toggleLegend = () => {
                 const isVisible = legendContainer.style.display === "block";
                 legendContainer.style.display = isVisible ? "none" : "block";
@@ -242,9 +246,8 @@
             legendHeader.addEventListener("click", toggleLegend);
             legendIcon.addEventListener("click", toggleLegend);
 
-            // Initialize as hidden
             legendContainer.style.display = "block";
-            legendIcon.style.display = "block"; // Initially show the icon
+            legendIcon.style.display = "block"; 
         });
     </script>
 </head>
