@@ -197,6 +197,11 @@
                 }
             });
 
+            surveyLayer.popupTemplate = {
+                title: "{What type of animal is it?}",
+                content: "Location: {location}<br>Date: {date}<br>Notes: {notes}"
+            };
+            
             map.add(surveyLayer);  
 
             const countyLayerUrl = "https://services5.arcgis.com/Ul9AyFFeFTjf08DW/arcgis/rest/services/Wisconsin_County_Boundaries_24K/FeatureServer"; 
